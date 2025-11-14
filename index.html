@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASIC MODAL - E-commerce</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: #000;
+            color: #fff;
+            padding: 0 40px;
+        }
+        
+        .top-bar {
+            background: #1a1a1a;
+            padding: 10px 40px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .nav-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 40px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            background: #fff;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .nav-icons span {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .menu-categories {
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 40px;
+        }
+        
+        .menu-categories ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            padding: 15px 0;
+        }
+        
+        .menu-categories a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .menu-categories a:hover {
+            color: #000;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #2c2c2c 0%, #000 100%);
+            color: #fff;
+            padding: 100px 40px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+        
+        .cta-button {
+            background: #fff;
+            color: #000;
+            padding: 15px 40px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #000;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 350px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #000;
+            color: #fff;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #000;
+        }
+        
+        .product-description {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-current {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .price-old {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .tech-features {
+            background: #fff;
+            padding: 60px 40px;
+            margin-top: 40px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        
+        .feature-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        /* PRODUCT PAGE STYLES */
+        .breadcrumb {
+            padding: 20px 40px;
+            font-size: 14px;
+            color: #666;
+            background: #f5f5f5;
+        }
+        
+        .breadcrumb span {
+            cursor: pointer;
+        }
+        
+        .breadcrumb span:hover {
+            color: #000;
+        }
+        
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 40px;
+        }
+        
+        .gallery {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .thumbnails {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 100px;
+            background: #e0e0e0;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+        }
+        
+        .thumbnail.active {
+            border-color: #000;
+        }
+        
+        .main-image {
+            flex: 1;
+            background: #f5f5f5;
+            height: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #999;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details {
+            padding: 20px 0;
+        }
+        
+        .product-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        
+        .product-subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .stars {
+            color: #000;
+            font-size: 18px;
+        }
+        
+        .reviews {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .price-section {
+            background: #f5f5f5;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+        
+        .price-section .price-old {
+            font-size: 18px;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 5px;
+        }
+        
+        .price-section .price-current {
+            font-size: 42px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        
+        .discount {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 5px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .installment {
+            font-size: 15px;
+            color: #666;
+        }
+        
+        .size-section, .color-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-label {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #000;
+        }
+        
+        .sizes {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .size-option {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .size-option:hover {
+            border-color: #000;
+        }
+        
+        .size-option.selected {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+        
+        .size-option.unavailable {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .colors {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .color-option {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 2px #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .color-option.selected {
+            box-shadow: 0 0 0 2px #000;
+        }
+        
+        .color-black {
+            background: #000;
+        }
+        
+        .color-white {
+            background: #fff;
+        }
+        
+        .color-gray {
+            background: #888;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .btn-buy {
+            flex: 1;
+            background: #000;
+            color: #fff;
+            padding: 18px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+        
+        .btn-buy:hover {
+            background: #333;
+        }
+        
+        .btn-wishlist {
+            width: 60px;
+            background: #fff;
+            border: 2px solid #000;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-wishlist:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        .shipping {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .shipping input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .features-list {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 30px;
+        }
+        
+        .feature-item-product {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-icon-product {
+            font-size: 24px;
+        }
+        
+        .feature-text {
+            flex: 1;
+        }
+        
+        .feature-title-product {
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 3px;
+        }
+        
+        .feature-description-product {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .tabs {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 40px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 40px;
+        }
+        
+        .tab-button {
+            padding: 15px 0;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab-button.active {
+            color: #000;
+            border-bottom-color: #000;
+        }
+        
+        .tab-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- HOME PAGE -->
+    <div id="homePage">
+        <div class="top-bar">
+            <div>FRETE GRÁTIS para compras acima de R$ 299</div>
+            <div>PARCELAMENTO EM ATÉ 6X SEM JUROS</div>
+        </div>
+        
+        <header>
+            <div class="nav-main">
+                <div class="logo" onclick="showHome()">BASIC MODAL</div>
+                <div class="search-bar">
+                    <input type="text" placeholder="O que você procura?">
+                </div>
+                <div class="nav-icons">
+                    <span>👤</span>
+                    <span>❤️</span>
+                    <span>🛒</span>
+                </div>
+            </div>
+        </header>
+        
+        <nav class="menu-categories">
+            <ul>
+                <li><a href="#">Novidades</a></li>
+                <li><a href="#">Masculino</a></li>
+                <li><a href="#">Feminino</a></li>
+                <li><a href="#">Tecnologia</a></li>
+                <li><a href="#">Sustentável</a></li>
+                <li><a href="#">Outlet</a></li>
+            </ul>
+        </nav>
+        
+        <section class="hero">
+            <h1>TECIDO TECNOLÓGICO</h1>
+            <p>Camisas que se adaptam ao seu corpo e ao seu dia</p>
+            <button class="cta-button">Descobrir Coleção</button>
+        </section>
+        
+        <div class="container">
+            <h2 class="section-title">Lançamentos</h2>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be inserted here by JavaScript -->
+            </div>
+        </div>
+        
+        <section class="tech-features">
+            <h2 class="section-title">Tecnologia BASIC MODAL</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🌡️</div>
+                    <div class="feature-title">Controle Térmico</div>
+                    <div class="feature-description">Tecido inteligente que se adapta à temperatura do corpo</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💧</div>
+                    <div class="feature-title">Secagem Rápida</div>
+                    <div class="feature-description">Tecnologia que elimina umidade em minutos</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">Proteção UV</div>
+                    <div class="feature-description">Bloqueio de raios UV integrado ao tecido</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌿</div>
+                    <div class="feature-title">Anti-Odor Natural</div>
+                    <div class="feature-description">Fibras com propriedades antibacterianas</div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="logo" style="margin-bottom: 20px;">BASIC MODAL</div>
+            <p style="color: #999;">Tecnologia em cada fio. Conforto em cada movimento.</p>
+        </footer>
+    </div>
+
+    <!-- PRODUCT PAGE -->
+    <div id="productPage" class="hidden">
+        <div class="top-bar">
+            <div style="text-align: center; width: 100%;">FRETE GRÁTIS para compras acima de R$ 299 | PARCELAMENTO EM ATÉ 6X SEM JUROS</div>
+        </div>
+        
+        <header>
+            <div class="nav-main">
+                <div class="logo" onclick="showHome()">BASIC MODAL</div>
+                <div class="nav-icons">
+                    <span>🔍</span>
+                    <span>👤</span>
+                    <span>❤️</span>
+                    <span>🛒</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="breadcrumb">
+            <span onclick="showHome()">Início</span> / 
+            <span>Masculino</span> / 
+            <span>Camisas</span> / 
+            <span id="breadcrumbProduct"></span>
+        </div>
+        
+        <div class="product-container">
+            <div class="gallery">
+                <div class="thumbnails">
+                    <div class="thumbnail active">Vista<br>Frontal</div>
+                    <div class="thumbnail">Vista<br>Lateral</div>
+                    <div class="thumbnail">Vista<br>Traseira</div>
+                    <div class="thumbnail">Detalhe<br>Tecido</div>
+                    <div class="thumbnail">Modelo<br>Usando</div>
+                </div>
+                <div class="main-image" id="mainImage"></div>
+            </div>
+            
+            <div class="product-details">
+                <h1 class="product-title" id="productTitle">Essential Black Tech</h1>
+                <p class="product-subtitle" id="productSubtitle">Camisa com Tecido Tecnológico Respirável</p>
+                
+                <div class="rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="reviews" id="productReviews">4.8 de 5 (342 avaliações)</div>
+                </div>
+                
+                <div class="price-section">
+                    <div class="price-old" id="priceOld">R$ 249,90</div>
+                    <div class="price-current" id="priceCurrent">R$ 189,90</div>
+                    <div class="discount" id="discount">-24% OFF</div>
+                    <div class="installment" id="installment">ou 6x de R$ 31,65 sem juros</div>
+                </div>
+                
+                <div class="color-section">
+                    <div class="section-label">COR: <span id="colorName">Preto</span></div>
+                    <div class="colors" id="colorOptions">
+                        <div class="color-option color-black selected" onclick="selectColor('black')"></div>
+                        <div class="color-option color-white" onclick="selectColor('white')"></div>
+                        <div class="color-option color-gray" onclick="selectColor('gray')"></div>
+                    </div>
+                </div>
+                
+                <div class="size-section">
+                    <div class="section-label">TAMANHO</div>
+                    <div class="sizes" id="sizeOptions">
+                        <div class="size-option" onclick="selectSize('PP')">PP</div>
+                        <div class="size-option" onclick="selectSize('P')">P</div>
+                        <div class="size-option selected" onclick="selectSize('M')">M</div>
+                        <div class="size-option" onclick="selectSize('G')">G</div>
+                        <div class="size-option" onclick="selectSize('GG')">GG</div>
+                        <div class="size-option unavailable">XG</div>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn-buy">Adicionar ao Carrinho</button>
+                    <button class="btn-wishlist">♡</button>
+                </div>
+                
+                <div class="shipping">
+                    <div class="section-label">CALCULAR FRETE</div>
+                    <input type="text" placeholder="Digite seu CEP">
+                    <div style="font-size: 14px; color: #666;">
+                        Entrega rápida para sua região
+                    </div>
+                </div>
+                
+                <div class="features-list">
+                    <div class="feature-item-product">
+                        <div class="feature-icon-product">🌡️</div>
+                        <div class="feature-text">
+                            <div class="feature-title-product">Controle de Temperatura</div>
+                            <div class="feature-description-product">Tecido inteligente que regula o calor</div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item-product">
+                        <div class="feature-icon-product">💧</div>
+                        <div class="feature-text">
+                            <div class="feature-title-product">Secagem Rápida</div>
+                            <div class="feature-description-product">Tecnologia anti-umidade avançada</div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item-product">
+                        <div class="feature-icon-product">🛡️</div>
+                        <div class="feature-text">
+                            <div class="feature-title-product">Proteção UV 50+</div>
+                            <div class="feature-description-product">Bloqueio total de raios ultravioleta</div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item-product">
+                        <div class="feature-icon-product">🌿</div>
+                        <div class="feature-text">
+                            <div class="feature-title-product">Anti-Odor Natural</div>
+                            <div class="feature-description-product">Fibras com tratamento antibacteriano</div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item-product">
+                        <div class="feature-icon-product">♻️</div>
+                        <div class="feature-text">
+                            <div class="feature-title-product">Sustentável</div>
+                            <div class="feature-description-product">70% fibras recicladas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active">Descrição</button>
+                <button class="tab-button">Especificações</button>
+                <button class="tab-button">Avaliações</button>
+                <button class="tab-button">Cuidados</button>
+            </div>
+            
+            <div class="tab-content" id="tabContent">
+                <p style="margin-bottom: 20px;">
+                    A <strong>Essential Black Tech</strong> é a evolução do básico. Desenvolvida com tecnologia têxtil de ponta, 
+                    esta camisa combina estilo minimalista com performance máxima.
+                </p>
+                <p style="margin-bottom: 20px;">
+                    O tecido exclusivo BASIC MODAL possui microfilamentos que criam uma barreira inteligente, mantendo você 
+                    confortável em qualquer temperatura. A tecnologia de secagem rápida elimina a umidade 3x mais rápido 
+                    que o algodão convencional.
+                </p>
+                <p>
+                    Perfeita para o dia a dia, trabalho ou momentos de lazer. O corte ergonômico se adapta ao movimento 
+                    natural do corpo, proporcionando liberdade total sem perder a elegância.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: 'Camiseta Básica Tech Daily',
+                description: 'Tecido respirável com proteção UV',
+                price: 189.90,
+                oldPrice: 249.90,
+                badge: 'NOVO',
+                image: 'https://www.insiderstore.com.br/cdn/shop/files/Foto-03_4c2dc2cf-6082-4111-bffd-f0ba0cffc3ba_400x400.png?v=1759538113', // 👈 SUBSTITUA AQUI pela URL da sua imagem
+                rating: 4.8,
+                reviews: 342
+            },
+            {
+                id: 2,
+                name: 'Undershirt Antissuor Moderado',
+                description: 'Anti-odor e secagem rápida',
+                price: 189.90,
+                oldPrice: null,
+                badge: 'BESTSELLER',
+                image: 'https://www.insiderstore.com.br/cdn/shop/files/04_crop_frente_undershirt_anti_suor_v.jpg?v=1759531518&width=510', // 👈 SUBSTITUA AQUI pela URL da sua imagem
+                rating: 4.8,
+                reviews: 289
+            },
+            {
+                id: 3,
+                name: 'Gray Tech T-Shirt',
+                description: 'Conforto térmico inteligente',
+                price: 189.90,
+                oldPrice: null,
+                badge: null,
+                image: 'https://www.insiderstore.com.br/cdn/shop/files/01_crop_tech_u_4e474809-7410-4fc3-b2cb-8af57ef8bbc0_400x400.jpg?v=1759543775', // 👈 SUBSTITUA AQUI pela URL da sua imagem
+                rating: 4.7,
+                reviews: 198
+            },
+            {
+                id: 4,
+                name: 'Tech T-Shirt Gola V',
+                description: 'Fibra de bambu + tecnologia',
+                price: 249.90,
+                oldPrice: 329.90,
+                badge: 'NOVO',
+                image: 'https://www.insiderstore.com.br/cdn/shop/files/Tech-V-Preta_400x400.jpg?v=1762532270', // 👈 SUBSTITUA AQUI pela URL da sua imagem
+                rating: 4.9,
+                reviews: 156
+            },
+            {
+                id: 5,
+                name: 'Camiseta Polo Game Changer',
+                description: 'Tecnologia anti-suor',
+                price: 219.90,
+                oldPrice: null,
+                badge: null,
+                image: 'https://www.insiderstore.com.br/cdn/shop/files/PoloGameChanger_RainForest_01_3b2587bf-5942-4ce9-8e08-7f67bf434320_400x400.jpg?v=1759537114', // 👈 SUBSTITUA AQUI pela URL da sua imagem
+                rating: 4.6,
+                reviews: 223
+            },
+            {
+                id: 6,
+                name: 'Tech T-Shirt Heavy Slim',
+                description: 'Elasticidade em 4 direções',
+                price: 159.90,
+                oldPrice: 229.90,
+                badge: 'OUTLET',
+                image: 'https://www.insiderstore.com.br/cdn/shop/files/TechT-ShirtHeavySlim_Branca_01_1f8f4e48-5ed4-4ba6-8175-26343d9af91b_400x400.jpg?v=1759536766', // Este fica sem imagem (opcional)
+                rating: 4.5,
+                reviews: 187
+            }
+        ];
+
+        // Render products on home page
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="showProduct(${product.id})">
+                    <div class="product-image">
+                        ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                        ${product.image.startsWith('http') ? 
+                            `<img src="${product.image}" alt="${product.name}">` : 
+                            `<div style="color: #999;">${product.image}</div>`
+                        }
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-price">
+                            <span class="price-current">R$ ${product.price.toFixed(2)}</span>
+                            ${product.oldPrice ? `<span class="price-old">R$ ${product.oldPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Show product page
+        function showProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            // Update product details
+            document.getElementById('productTitle').textContent = product.name;
+            document.getElementById('productSubtitle').textContent = 'Camisa com Tecido Tecnológico Respirável';
+            document.getElementById('productReviews').textContent = `${product.rating} de 5 (${product.reviews} avaliações)`;
+            document.getElementById('breadcrumbProduct').textContent = product.name;
+            
+            // Update main image
+            if (product.image.startsWith('http')) {
+                document.getElementById('mainImage').innerHTML = `<img src="${product.image}" alt="${product.name}">`;
+            } else {
+                document.getElementById('mainImage').innerHTML = `<div>${product.image} - Vista Principal</div>`;
+            }
+            
+            // Update prices
+            if (product.oldPrice) {
+                document.getElementById('priceOld').style.display = 'block';
+                document.getElementById('priceOld').textContent = `R$ ${product.oldPrice.toFixed(2)}`;
+                document.getElementById('discount').style.display = 'inline-block';
+                const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
+                document.getElementById('discount').textContent = `-${discountPercent}% OFF`;
+            } else {
+                document.getElementById('priceOld').style.display = 'none';
+                document.getElementById('discount').style.display = 'none';
+            }
+            
+            document.getElementById('priceCurrent').textContent = `R$ ${product.price.toFixed(2)}`;
+            document.getElementById('installment').textContent = `ou 6x de R$ ${(product.price / 6).toFixed(2)} sem juros`;
+
+            // Show product page, hide home page
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('productPage').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Show home page
+        function showHome() {
+            document.getElementById('productPage').classList.add('hidden');
+            document.getElementById('homePage').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        // Select color
+        function selectColor(color) {
+            document.querySelectorAll('.color-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            const colorNames = {
+                black: 'Preto',
+                white: 'Branco',
+                gray: 'Cinza'
+            };
+            document.getElementById('colorName').textContent = colorNames[color];
+        }
+
+        // Select size
+        function selectSize(size) {
+            if (event.target.classList.contains('unavailable')) return;
+            
+            document.querySelectorAll('.size-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        // Initialize
+        renderProducts();
+    </script>
+</body>
+</html>
